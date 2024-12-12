@@ -13,14 +13,14 @@
         name: "test-host-{{ 999999 | random | string }}"
 
     # Basic tests for Ipam Host
-    - name: "Create a Host (check mode)"
+    - name: Create a Host (check mode)
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
         state: "present"
       check_mode: true
       register: host
 
-    - name: "Create a Host"
+    - name: Create a Host
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
         state: "present"
@@ -36,7 +36,7 @@
           - host_info.objects | length == 1
           - host_info.objects[0].id == host.id
 
-    - name: "Create a Host (idempotent)"
+    - name: Create a Host (idempotent)
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
         state: "present"
@@ -46,13 +46,12 @@
           - host is not changed
           - host is not failed
 
-    - name: "Delete a Host (check mode)"
+    - name: Delete a Host (check mode)
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
         state: "absent"
       check_mode: true
       register: host
-
     - name: Get information about the Host
       infoblox.bloxone.ipam_host_info:
         filters:
@@ -64,7 +63,7 @@
           - host is not failed
           - host_info.objects | length == 1
 
-    - name: "Delete a host"
+    - name: Delete a host
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
         state: "absent"
@@ -80,7 +79,7 @@
           - host is not failed
           - host_info.objects | length == 0
 
-    - name: "Delete a host (idempotent)"
+    - name: Delete a host (idempotent)
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
         state: "absent"
@@ -90,7 +89,7 @@
           - host is not changed
           - host is not failed
 
-    - name: "Create a Host with comment"
+    - name: Create a Host with comment
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
         comment: "test comment"
@@ -108,7 +107,7 @@
           - host_info.objects[0].id == host.id
           - host_info.objects[0].comment == "test comment"
 
-    - name: "Create a Host with tags"
+    - name: Create a Host with tags
       infoblox.bloxone.ipam_host:
           name: "{{ name }}"
           tags:
@@ -130,20 +129,20 @@
           - host_info.objects[0].tags.tag1 == "value1"
           - host_info.objects[0].tags.tag2 == "value2"
 
-    - name: "Create an IP space"
+    - name: Create an IP space
       infoblox.bloxone.ipam_ip_space:
         name: "{{ name }}"
         state: "present"
       register: ip_space
 
-    - name: "Create a Subnet"
+    - name: Create a Subnet
       infoblox.bloxone.ipam_subnet:
         address: "10.0.0.0/24"
         space: "{{ ip_space.id }}"
         state: "present"
       register: subnet
 
-    - name: "Create a Host with Addresses"
+    - name: Create a Host with Addresses
       infoblox.bloxone.ipam_host:
           name: "{{ name }}"
           addresses:

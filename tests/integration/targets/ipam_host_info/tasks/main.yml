@@ -9,8 +9,7 @@
         tag1_value: "site-{{ 999999 | random | string }}"
         tag2_value: "site-{{ 999999 | random | string }}"
 
-
-    - name: "Create a Host"
+    - name: Create a Host
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
         tags:
@@ -36,7 +35,7 @@
         that:
           - host_info.objects | length == 1
 
-    - name: Get IPAM Host information by filter query
+    - name: Get Host information by filter query
       infoblox.bloxone.ipam_host_info:
         filter_query: "name=='{{ name }}'"
     - assert:
@@ -44,7 +43,7 @@
           - host_info.objects | length == 1
           - host_info.objects[0].id == host.id
 
-    - name: Get IPAM Host information by tag filters
+    - name: Get Host information by tag filters
       infoblox.bloxone.ipam_host_info:
         tag_filters:
              tag1: "{ { tag1_value } }"
