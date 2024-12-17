@@ -47,12 +47,11 @@ extends_documentation_fragment:
 """  # noqa: E501
 
 EXAMPLES = r"""
-    - name: "Create a Host"
+    - name: Create a Host
       infoblox.bloxone.ipam_host:
-        name: "{{ name }}"
+        name: "example_host"
         tags:
-           tag1: "{{ tag1_value }}"
-           tag2: "{{ tag1_value }}"
+           region: "eu"
         state: "present"
       register: host
 
@@ -67,30 +66,28 @@ EXAMPLES = r"""
     - name: Get Host information by filters
       infoblox.bloxone.ipam_host_info:
         filters:
-          name: "{{ name }}"
+          name: "example_host"
       register: host_info
     - assert:
         that:
           - host_info.objects | length == 1
 
-    - name: Get IPAM Host information by filter query
+    - name: Get Host information by filter query
       infoblox.bloxone.ipam_host_info:
-        filter_query: "name=='{{ name }}'"
+        filter_query: "name=='example_host'"
     - assert:
         that:
           - host_info.objects | length == 1
           - host_info.objects[0].id == host.id
 
-    - name: Get IPAM Host information by tag filters
+    - name: Get Host information by tag filters
       infoblox.bloxone.ipam_host_info:
         tag_filters:
-             tag1: "{ { tag1_value } }"
-             tag2: "{ { tag2_value } }"
+             region: "eu"
     - assert:
         that:
-          -  host_info.objects | length == 1
-          -  host_info.objects[0].id ==  host.id
-
+          - host_info.objects | length == 1
+          - host_info.objects[0].id ==  host.id
 """
 
 RETURN = r"""

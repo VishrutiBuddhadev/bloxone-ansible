@@ -6,15 +6,13 @@
   block:
     - ansible.builtin.set_fact:
         name: "test-host-{{ 999999 | random | string }}"
-        tag1_value: "site-{{ 999999 | random | string }}"
-        tag2_value: "site-{{ 999999 | random | string }}"
+        tag_value: "site-{{ 999999 | random | string }}"
 
     - name: Create a Host
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
         tags:
-           tag1: "{{ tag1_value }}"
-           tag2: "{{ tag1_value }}"
+           region: "{{ tag_value }}"
         state: "present"
       register: host
 
@@ -46,8 +44,7 @@
     - name: Get Host information by tag filters
       infoblox.bloxone.ipam_host_info:
         tag_filters:
-             tag1: "{ { tag1_value } }"
-             tag2: "{ { tag2_value } }"
+             region: "{{ tag_value }}"
     - assert:
         that:
           - host_info.objects | length == 1

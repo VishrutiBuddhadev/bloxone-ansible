@@ -98,39 +98,39 @@ extends_documentation_fragment:
 """  # noqa: E501
 
 EXAMPLES = r"""
-        - name: "Create a Host"
-          infoblox.bloxone.ipam_host:
-            name: "{{ name }}"
-            state: "present"
-          register: host
+    - name: "Create an IP space (required as parent)"
+      infoblox.bloxone.ipam_ip_space:
+        name: "example_ip_space"
+        state: "present"
+      register: ip_space
+      
+    - name: "Create a Host"
+      infoblox.bloxone.ipam_host:
+        name: "example_host"
+        state: "present"
+      register: host
 
-        - name: "Create an IP space"
-          infoblox.bloxone.ipam_ip_space:
-            name: "{{ name }}"
-            state: "present"
-          register: ip_space
+    - name: "Create a Subnet"
+      infoblox.bloxone.ipam_subnet:
+        address: "10.0.0.0/24"
+        space: "{{ ip_space.id }}"
+        state: "present"
+      register: subnet
 
-        - name: "Create a Subnet"
-          infoblox.bloxone.ipam_subnet:
-            address: "10.0.0.0/24"
-            space: "{{ ip_space.id }}"
-            state: "present"
-          register: subnet
+    - name: "Create a Host with Additional Fields"
+      infoblox.bloxone.ipam_host:
+          name: "example_host"
+          addresses:
+              - address: "10.0.0.1"
+                space: "{{ ip_space.id }}"
+          state: "present"
+      register: host
 
-        - name: "Create a Host with Addresses"
-          infoblox.bloxone.ipam_host:
-              name: "{{ name }}"
-              addresses:
-                  - address: "10.0.0.1"
-                    space: "{{ ip_space.id }}"
-              state: "present"
-          register: host
-
-        - name: "Delete a host"
-          infoblox.bloxone.ipam_host:
-            name: "{{ name }}"
-            state: "absent"
-          register: host
+    - name: "Delete a host"
+      infoblox.bloxone.ipam_host:
+        name: "example_host"
+        state: "absent"
+      register: host
 """
 
 RETURN = r"""
