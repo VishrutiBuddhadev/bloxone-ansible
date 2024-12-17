@@ -103,7 +103,7 @@ EXAMPLES = r"""
         name: "example_ip_space"
         state: "present"
       register: ip_space
-      
+
     - name: "Create a Host"
       infoblox.bloxone.ipam_host:
         name: "example_host"
