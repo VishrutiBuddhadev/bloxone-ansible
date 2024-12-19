@@ -103,6 +103,13 @@ EXAMPLES = r"""
         name: "example_ip_space"
         state: "present"
       register: ip_space
+      
+    - name: "Create a Subnet (required as parent)"
+      infoblox.bloxone.ipam_subnet:
+        address: "10.0.0.0/24"
+        space: "{{ ip_space.id }}"
+        state: "present"
+      register: subnet
 
     - name: "Create a Host"
       infoblox.bloxone.ipam_host:
@@ -110,19 +117,15 @@ EXAMPLES = r"""
         state: "present"
       register: host
 
-    - name: "Create a Subnet"
-      infoblox.bloxone.ipam_subnet:
-        address: "10.0.0.0/24"
-        space: "{{ ip_space.id }}"
-        state: "present"
-      register: subnet
-
     - name: "Create a Host with Additional Fields"
       infoblox.bloxone.ipam_host:
           name: "example_host"
           addresses:
               - address: "10.0.0.1"
                 space: "{{ ip_space.id }}"
+          comment: "IPAM Host"
+          tags:
+             region: "eu"
           state: "present"
       register: host
 
