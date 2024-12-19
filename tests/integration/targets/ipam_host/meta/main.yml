@@ -1,4 +1,2 @@
 ---
-dependencies:
-  - setup_ip_space
-  - setup_subnet
+dependencies: [setup_ip_space, setup_subnet]

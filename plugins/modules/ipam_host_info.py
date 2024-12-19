@@ -47,47 +47,25 @@ extends_documentation_fragment:
 """  # noqa: E501
 
 EXAMPLES = r"""
-    - name: Create a Host
-      infoblox.bloxone.ipam_host:
-        name: "example_host"
-        tags:
-           region: "eu"
-        state: "present"
-      register: host
-
     - name: Get Host information by ID
       infoblox.bloxone.ipam_host_info:
         id: "{{ host.id }}"
       register: host_info
-    - assert:
-        that:
-          - host_info.objects | length == 1
 
     - name: Get Host information by filters
       infoblox.bloxone.ipam_host_info:
         filters:
           name: "example_host"
       register: host_info
-    - assert:
-        that:
-          - host_info.objects | length == 1
 
     - name: Get Host information by filter query
       infoblox.bloxone.ipam_host_info:
         filter_query: "name=='example_host'"
-    - assert:
-        that:
-          - host_info.objects | length == 1
-          - host_info.objects[0].id == host.id
 
     - name: Get Host information by tag filters
       infoblox.bloxone.ipam_host_info:
         tag_filters:
              region: "eu"
-    - assert:
-        that:
-          - host_info.objects | length == 1
-          - host_info.objects[0].id ==  host.id
 """
 
 RETURN = r"""

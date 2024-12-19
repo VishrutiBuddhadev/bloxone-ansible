@@ -20,6 +20,16 @@
         state: "present"
       check_mode: true
       register: host
+    - name: Get information about the host
+      infoblox.bloxone.ipam_host_info:
+        filters:
+          name: "{{ name }}"
+      register: host_info
+    - assert:
+        that:
+          - host is changed
+          - host is not failed
+          - host_info.objects | length == 0
 
     - name: Create a Host
       infoblox.bloxone.ipam_host:
