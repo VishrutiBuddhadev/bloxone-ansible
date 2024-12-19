@@ -103,7 +103,7 @@ EXAMPLES = r"""
         name: "example_ip_space"
         state: "present"
       register: ip_space
-      
+
     - name: "Create a Subnet (required as parent)"
       infoblox.bloxone.ipam_subnet:
         address: "10.0.0.0/24"
