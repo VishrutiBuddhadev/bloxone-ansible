@@ -65,7 +65,7 @@ EXAMPLES = r"""
     - name: Get Host information by tag filters
       infoblox.bloxone.ipam_host_info:
         tag_filters:
-             region: "eu"
+            location: "site-1"
 """
 
 RETURN = r"""

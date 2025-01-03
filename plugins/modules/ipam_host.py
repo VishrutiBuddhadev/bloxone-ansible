@@ -125,7 +125,7 @@ EXAMPLES = r"""
                 space: "{{ ip_space.id }}"
           comment: "IPAM Host"
           tags:
-             region: "eu"
+             location: "site-1"
           state: "present"
       register: host
 
