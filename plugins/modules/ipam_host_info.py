@@ -50,13 +50,11 @@ EXAMPLES = r"""
     - name: Get Host information by ID
       infoblox.bloxone.ipam_host_info:
         id: "{{ host.id }}"
-      register: host_info
 
     - name: Get Host information by filters
       infoblox.bloxone.ipam_host_info:
         filters:
           name: "example_host"
-      register: host_info
 
     - name: Get Host information by filter query
       infoblox.bloxone.ipam_host_info:
