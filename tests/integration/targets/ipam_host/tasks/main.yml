@@ -164,6 +164,7 @@
         name: "{{ name }}"
         state: "absent"
       ignore_errors: true
+
     - name: "Delete IP Space"
       ansible.builtin.include_role:
         name: setup_ip_space
