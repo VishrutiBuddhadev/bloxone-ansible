@@ -4,7 +4,7 @@
       csp_url: "{{ csp_url }}"
       api_key: "{{ api_key }}"
   block:
-    - name: "Delete an IP space"
+    - name: "Delete IP space"
       infoblox.bloxone.ipam_ip_space:
           name: "{{ ip_space_name }}"
           state: "absent"
