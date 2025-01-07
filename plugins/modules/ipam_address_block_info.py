@@ -62,9 +62,8 @@ EXAMPLES = r"""
         address: "10.0.0.0/16"
         space: "{{ ip_space.id }}"
         tags:
-          location: "{{ tag_value }}"
+          location: "site-1"
         state: "present"
-      register: address_block
 
     - name: Get Address Block information by ID
       infoblox.bloxone.ipam_address_block_info:
@@ -83,7 +82,7 @@ EXAMPLES = r"""
     - name: Get Address Block information by tag filters
       infoblox.bloxone.ipam_address_block_info:
         tag_filters:
-          location: "{{ tag_value }}"
+          location: "site-1"
 """
 
 RETURN = r"""
