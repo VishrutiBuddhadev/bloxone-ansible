@@ -10,9 +10,9 @@ __metaclass__ = type
 DOCUMENTATION = r"""
 ---
 module: ipam_host
-short_description: Manage IpamHost
+short_description: Manage IPAM host
 description:
-    - Manage IpamHost
+    - Manage IPAM host
 version_added: 2.0.0
 author: Infoblox Inc. (@infobloxopen)
 options:
@@ -134,12 +134,12 @@ EXAMPLES = r"""
 RETURN = r"""
 id:
     description:
-        - ID of the IpamHost object
+        - ID of the IPAM host object
     type: str
     returned: Always
 item:
     description:
-        - IpamHost object
+        - IPAM host object
     type: complex
     returned: Always
     contains:

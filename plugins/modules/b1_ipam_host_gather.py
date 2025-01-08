@@ -7,7 +7,7 @@ from ansible_collections.infoblox.bloxone.plugins.module_utils.b1ddi import Requ
 
 DOCUMENTATION = """
 ---
-module: b1_ipam_ip_space
+module: b1_ipam_host
 author: "Akhilesh Kabade (@akhilesh-kabade-infoblox)"
 short_description: Gather IPAM host facts
 deprecated:

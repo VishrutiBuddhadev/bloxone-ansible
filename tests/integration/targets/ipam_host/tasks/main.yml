@@ -100,6 +100,29 @@
           - host is not changed
           - host is not failed
 
+    - name: Create a Host with auto generate records set to true
+      infoblox.bloxone.ipam_host:
+        name: "{{ name }}"
+        auto_generate_records: true
+        host_names:
+          - name: "example-host"
+            zone: "{{ _auth_zone.id }}"
+        addresses:
+          - address: "10.0.0.1"
+            space: "{{ _ip_space.id }}"
+        state: "present"
+      register: host
+    - name: Get information about the host
+      infoblox.bloxone.ipam_host_info:
+        filters:
+          name: "{{ name }}"
+      register: host_info
+    - assert:
+        that:
+          - host is not failed
+          - host_info.objects | length == 1
+          - host_info.objects[0].id == host.id
+
     - name: Create a Host with comment
       infoblox.bloxone.ipam_host:
         name: "{{ name }}"
@@ -164,6 +187,16 @@
         name: "{{ name }}"
         state: "absent"
       ignore_errors: true
+
+    - name: "Delete an Auth Zone"
+      ansible.builtin.include_role:
+        name: setup_auth_zone
+        tasks_from: cleanup.yml
+
+    - name: "Delete DNS View"
+      ansible.builtin.include_role:
+        name: setup_view
+        tasks_from: cleanup.yml
 
     - name: "Delete IP Space"
       ansible.builtin.include_role:
