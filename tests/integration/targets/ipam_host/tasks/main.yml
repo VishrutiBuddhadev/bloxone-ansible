@@ -122,6 +122,10 @@
           - host is not failed
           - host_info.objects | length == 1
           - host_info.objects[0].id == host.id
+          - host_info.objects[0].name == name
+          - host_info.objects[0].auto_generate_records == true
+          - host_info.objects[0].host_names[0].name == "example-host"
+          - host_info.objects[0].addresses[0].address == "10.0.0.1"
 
     - name: Create a Host with comment
       infoblox.bloxone.ipam_host:
