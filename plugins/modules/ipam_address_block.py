@@ -744,7 +744,7 @@ EXAMPLES = r"""
 
     - name: "Create an address block"
       infoblox.bloxone.ipam_address_block:
-        address: "10.0.0.0/24"
+        address: "10.0.0.0/16"
         space: "{{ ip_space.id }}"
         state: "present"
 
