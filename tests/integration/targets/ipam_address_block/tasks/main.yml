@@ -65,7 +65,6 @@
         next_available_id: "{{ address_block.id }}"
         state: "present"
       register: next_available_address_block
-#      Get information about the created Address Block using Next Available ID
     - name: Get Address Block Information by ID
       infoblox.bloxone.ipam_address_block_info:
         id: "{{ next_available_address_block.id }}"
@@ -75,29 +74,6 @@
           - next_available_address_block is changed
           - next_available_address_block is not failed
           - next_available_address_block_info.objects | length == 1
-
-    - name: Get Next Available Address Block Information by ID
-      infoblox.bloxone.ipam_next_available_address_block_info:
-          id: "{{ next_available_address_block.id }}"
-          cidr: 20
-      register: next_available_address_block_info
-    - assert:
-        that:
-          - next_available_address_block is changed
-          - next_available_address_block is not failed
-          - next_available_address_block_info.objects | length == 1
-
-    - name: Get Next Available Address Block Information by ID and Count
-      infoblox.bloxone.ipam_next_available_address_block_info:
-        id: "{{ next_available_address_block.id }}"
-        cidr: 24
-        count: 5
-      register: next_available_address_block_info
-    - assert:
-        that:
-          - next_available_address_block is changed
-          - next_available_address_block is not failed
-          - next_available_address_block_info.objects | length == 5
 
     - name: "Delete an Address Block (check mode)"
       infoblox.bloxone.ipam_address_block:

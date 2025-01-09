@@ -36,21 +36,20 @@ extends_documentation_fragment:
 """  # noqa: E501
 
 EXAMPLES = r"""
-    - name: "Create Next Available Address Block"
+    - name: "Create an Address Block"
       infoblox.bloxone.ipam_address_block:
-        space: "{{ ip_space.id }}"
-        cidr: 20
-        next_available_id: "{{ address_block.id }}"
+        address: "10.0.0.0/16"
+        space: "{{ _ip_space.id }}"
         state: "present"
 
     - name: Get Next Available Address Block Information by ID
       infoblox.bloxone.ipam_next_available_address_block_info:
-          id: "{{ next_available_address_block.id }}"
+          id: "{{ address_block.id }}"
           cidr: 20
 
     - name: Get Next Available Address Block Information by ID and Count
       infoblox.bloxone.ipam_next_available_address_block_info:
-        id: "{{ next_available_address_block.id }}"
+        id: "{{ address_block.id }}"
         cidr: 24
         count: 5
 """
