@@ -18,8 +18,7 @@
       register: next_available_address_block_info
     - assert:
         that:
-          - address_block is changed
-          - address_block is not failed
+          - next_available_address_block_info is not failed
           - next_available_address_block_info.objects | length == 1
 
     - name: Get Next Available Address Block Information by ID and Count
@@ -30,6 +29,5 @@
       register: next_available_address_block_info
     - assert:
         that:
-          - address_block is changed
-          - address_block is not failed
+          - next_available_address_block_info is not failed
           - next_available_address_block_info.objects | length == 5
