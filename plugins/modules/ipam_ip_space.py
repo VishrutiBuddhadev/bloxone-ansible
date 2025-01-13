@@ -813,9 +813,9 @@ EXAMPLES = r"""
     infoblox.bloxone.ipam_ip_space:
       name: "my-ip-space"
       tags:
-        location: "my-location"
+        location: "site-1"
 
-  - name: "Create an IP space with DHCP configuration value overridden"
+  - name: "Create an IP space with Additional Fields"
     infoblox.bloxone.ipam_ip_space:
         name: "my-ip-space"
         dhcp_config:
@@ -847,6 +847,9 @@ EXAMPLES = r"""
                     action: inherit
                 lease_time_v6:
                     action: inherit
+        tags:
+            location: "my-location"
+        comment: "IP Space"
 
   - name: "Delete an IP space"
     infoblox.bloxone.ipam_ip_space:
