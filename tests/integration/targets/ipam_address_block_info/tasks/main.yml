@@ -57,3 +57,8 @@
         that:
           - address_block_info.objects | length == 1
           - address_block_info.objects[0].id == address_block.id
+  always:
+    # Cleanup if the test fails
+    - ansible.builtin.include_role:
+        name: setup_ip_space
+        tasks_from: cleanup.yml
