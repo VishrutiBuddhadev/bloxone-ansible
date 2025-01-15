@@ -11,7 +11,7 @@
         state: "present"
       register: address_block
 
-    - name: Get Next Available Address Block Information by ID
+    - name: Get Next Available Address Block Information by ID and default Count
       infoblox.bloxone.ipam_next_available_address_block_info:
           id: "{{ address_block.id }}"
           cidr: 20

@@ -741,12 +741,14 @@ EXAMPLES = r"""
       infoblox.bloxone.ipam_ip_space:
         name: "my-ip-space"
         state: "present"
+        register: ip_space
 
     - name: "Create an address block"
       infoblox.bloxone.ipam_address_block:
         address: "10.0.0.0/16"
         space: "{{ ip_space.id }}"
         state: "present"
+        register: address_block
 
     - name: "Create Next Available Address Block"
       infoblox.bloxone.ipam_address_block:
@@ -2779,6 +2781,7 @@ def main():
         mutually_exclusive=[["address", "next_available_id"]],
         required_if=[("state", "present", ["space"])],
         required_one_of=[["address", "next_available_id"]],
+        required_together=[["cidr", "next_available_id"]],
     )
 
     module.run_command()
