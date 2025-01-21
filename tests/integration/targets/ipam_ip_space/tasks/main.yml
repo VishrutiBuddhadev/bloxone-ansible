@@ -203,8 +203,13 @@
           - ip_space_info.objects | length == 1
           - ip_space_info.objects[0].asm_config.asm_threshold == 70
           - ip_space_info.objects[0].asm_config.forecast_period == 12
+          - ip_space_info.objects[0].inheritance_sources.asm_config.asm_enable_block.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.asm_growth_block.action == "inherit"
           - ip_space_info.objects[0].inheritance_sources.asm_config.asm_threshold.action == "override"
           - ip_space_info.objects[0].inheritance_sources.asm_config.forecast_period.action == "override"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.history.action == "override"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.min_total.action == "override"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.min_unused.action == "override"
 
     - name: "Create an IP Space with comment"
       infoblox.bloxone.ipam_ip_space:
@@ -221,7 +226,7 @@
         that:
           - ip_space is not failed
           - ip_space_info.objects | length == 1
-          - ip_space_info.objects[0].comment == ip_space.object.comment
+          - ip_space_info.objects[0].comment == "Comment"
 
     - name: "Create an IP Space with ddns_client_update set to server"
       infoblox.bloxone.ipam_ip_space:
@@ -392,6 +397,91 @@
           - ip_space is not failed
           - ip_space_info.objects | length == 1
           - ip_space_info.objects[0].hostname_rewrite_regex == "[^a-z]"
+
+    - name: "Create an IP Space with empty Compartment Id"
+      infoblox.bloxone.ipam_ip_space:
+        name: "{{ name }}"
+        compartment_id: ""
+        state: "present"
+      register: ip_space
+    - name: Get information about the IP Space
+      infoblox.bloxone.ipam_ip_space_info:
+        filters:
+          name: "{{ name }}"
+      register: ip_space_info
+    - assert:
+        that:
+          - ip_space is not failed
+          - ip_space_info.objects | length == 1
+          - ip_space_info.objects[0].compartment_id == ""
+
+    - name: "Create an IP Space with inheritance sources"
+      infoblox.bloxone.ipam_ip_space:
+        name: "{{ name }}"
+        inheritance_sources:
+          asm_config:
+            asm_enable_block:
+              action: inherit
+            asm_growth_block:
+              action: inherit
+            asm_threshold:
+              action: inherit
+            forecast_period:
+              action: inherit
+            history:
+              action: inherit
+            min_total:
+              action: inherit
+            min_unused:
+              action: inherit
+          ddns_client_update:
+            action: inherit
+          ddns_conflict_resolution_mode:
+            action: inherit
+          ddns_ttl_percent:
+            action: inherit
+          ddns_update_on_renew:
+            action: inherit
+          ddns_use_conflict_resolution:
+            action: inherit
+          header_option_filename:
+            action: inherit
+          header_option_server_address:
+            action: inherit
+          header_option_server_name:
+            action: inherit
+          hostname_rewrite_block:
+            action: inherit
+          vendor_specific_option_option_space:
+            action: inherit
+        state: "present"
+      register: ip_space
+    - name: Get information about the IP Space
+      infoblox.bloxone.ipam_ip_space_info:
+        filters:
+          name: "{{ name }}"
+      register: ip_space_info
+    - assert:
+        that:
+          - ip_space is not failed
+          - ip_space_info.objects | length == 1
+          - ip_space_info.objects[0].inheritance_sources.asm_config.asm_enable_block.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.asm_growth_block.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.asm_threshold.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.forecast_period.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.history.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.min_total.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.asm_config.min_unused.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.ddns_client_update.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.ddns_conflict_resolution_mode.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.ddns_ttl_percent.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.ddns_update_on_renew.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.ddns_use_conflict_resolution.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.header_option_filename.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.header_option_server_address.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.header_option_server_name.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.hostname_rewrite_block.action == "inherit"
+          - ip_space_info.objects[0].inheritance_sources.vendor_specific_option_option_space.action == "inherit"
 
   always:
     # Cleanup if the test fails
