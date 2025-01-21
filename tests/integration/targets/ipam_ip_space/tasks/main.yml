@@ -415,6 +415,23 @@
           - ip_space_info.objects | length == 1
           - ip_space_info.objects[0].compartment_id == ""
 
+    - name: "Create an IP Space with Compartment Id as null"
+      infoblox.bloxone.ipam_ip_space:
+        name: "{{ name }}"
+        compartment_id: null
+        state: "present"
+      register: ip_space
+    - name: Get information about the IP Space
+      infoblox.bloxone.ipam_ip_space_info:
+        filters:
+          name: "{{ name }}"
+      register: ip_space_info
+    - assert:
+        that:
+          - ip_space is not failed
+          - ip_space_info.objects | length == 1
+          - ip_space_info.objects[0].compartment_id == ""
+
     - name: "Create an IP Space with inheritance sources"
       infoblox.bloxone.ipam_ip_space:
         name: "{{ name }}"
